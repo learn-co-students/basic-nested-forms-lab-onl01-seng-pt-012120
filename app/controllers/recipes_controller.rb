@@ -1,8 +1,6 @@
 class RecipesController < ApplicationController
   def show
     @recipe = Recipe.find(params[:id])
-    @recipe.ingredients.build(ingredient_type: 'first')
-    @recipe.ingredients.build(ingredient_type: 'second')
   end
 
   def index
@@ -11,6 +9,8 @@ class RecipesController < ApplicationController
 
   def new
     @recipe = Recipe.new
+    @recipe.ingredients.build(name: 'first')
+    @recipe.ingredients.build(name: 'second')
   end
 
   def create
@@ -20,7 +20,7 @@ class RecipesController < ApplicationController
   private
 
   def recipe_params
-      params.require(:recipe).permit(:title)
+      params.require(:recipe).permit(:title, ingredients_attributes: [:name, :quantity])
   end 
   
 end
